@@ -156,6 +156,8 @@ Step 3. Sum up all the arrows. Larger triangles have longer and heavier arrows t
 
 Step 4. Normalize by dividing the total by its length (.unit()), so only the direction is left and that the value is from 0 to 1 which is the format needed for the lighting calculations. 
 
+So for below, in the two images, the meshes are the same, but the right one uses area weighted vertex normals to implement phong shading. 
+
 		</p>
 
 				<div style="display: flex; flex-direction: column; align-items: center;">
@@ -167,7 +169,7 @@ Step 4. Normalize by dividing the total by its length (.unit()), so only the dir
 				</td>
 				<td style="text-align: center;">
 				  <img src="assets/phongshadingpot.png" width="400px"/>
-				  <figcaption>phong smoothing shaded pot with vertex normals applied.</figcaption>
+				  <figcaption>phong shaded pot using area weighted vertex normals.</figcaption>
 				</td>
 			  </tr>
 			  </table>
