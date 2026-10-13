@@ -115,12 +115,36 @@ Run this for all values of t and connecting the final points gives the Bezier cu
 		</div>
 
 		<h3>Part 2: Bezier surfaces with separable 1D de Casteljau</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		
+		<p style="white-space: pre-wrap;">
+
+	We can think of a bezier surface as a curve of curves, creating the possibility of a grid of control points. 
+
+	De Casteljau is applied twice. Each row of n control points is itself a Bezier curve, so I evaluate every row at parameter u using the same lerp process from Part 1. Each row reduces to a single point, which gives n points in total, one per row. Those n points form another Bezier curve, which I evaluate at v to get a single point on the surface. Once again like part 1, to sweep from u and v from 0 to 1, covers the whole surface instead of just the curve. 
+	Implementation:
+
+	3 functions
+
+	BezierPatch::evaluateStep(points, t) performs one level of de Casteljau in 3D. It lerps each adjacent pair of points, (1 − t)·points[i] + t·points[i+1], and returns a vector with one fewer point. Very similar to part 1, but uses a Vector3D.
+
+	BezierPatch::evaluate1D(points, t) it completely evaluates a Bezier curve by calling evaluateStep repeatedly until only the final point remains and then returns it. 
+
+	BezierPatch::evaluate(u, v) does the separable evaluation. It loops over each row of controlPoints, calls evaluate1D(row, u) to get one point per row, collects those into a vector, and calls evaluate1D on it with v to get the final surface point.
+
+		</p>
+
+	<figure>
+	<img src="assets/bezteapot.png" alt="rate1" style="width:75%" />
+	<figcaption>bez teapot evaluation</figcaption>
+	</figure>
 
 		<h2>Section II: Triangle Meshes and Half-Edge Data Structure</h2>
 
 		<h3>Part 3: Area-weighted vertex normals</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		
+		<p style="white-space: pre-wrap;">
+
+		</p>
 
 		<h3>Part 4: Edge flip</h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
