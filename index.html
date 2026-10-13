@@ -144,7 +144,36 @@ Run this for all values of t and connecting the final points gives the Bezier cu
 		
 		<p style="white-space: pre-wrap;">
 
+			Implementing “area weighted vertex normal”.
+
+So essentially a vertex normal is the direction a vertex “faces” towards. To find it I evaluate every triangle that touches the vertex, and combine their directions. Larger triangles (area weighting) are worth more so to speak in the weight evaluation. 
+
+Step 1, Find the triangles that surround the vertex. I start at a vertex half edge and go through it (h = h->twin() -> next()) until I return to where I begin. Each step gives me one triangle that touches the vertex, and if boundary face is true i skip it, since they do not count. 
+
+Step 2. Find each triangles facing direction. For each triangle I take the two edges that vegin at the vertex and get the crossproduct. This result is a line that points straight out of the triangle, and the more area a triangle covers, the longer the length of the line and the higher the value. 
+
+Step 3. Sum up all the arrows. Larger triangles have longer and heavier arrows that weigh more. 
+
+Step 4. Normalize by dividing the total by its length (.unit()), so only the direction is left and that the value is from 0 to 1 which is the format needed for the lighting calculations. 
+
 		</p>
+
+				<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="assets/regularshadingpot.png" width="400px"/>
+				  <figcaption>regular shaded pot.</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="assets/phongshadingpot.png" width="400px"/>
+				  <figcaption>phong smoothing shaded pot with vertex normals applied.</figcaption>
+				</td>
+			  </tr>
+			  </table>
+			  </div>
+
+
 
 		<h3>Part 4: Edge flip</h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
