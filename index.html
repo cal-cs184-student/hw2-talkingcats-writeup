@@ -178,26 +178,54 @@ So for below, in the two images, the meshes are the same, but the right one uses
 
 
 		<h3>Part 4: Edge flip</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+	<figure>
+	<img src="assets/edgeflip.jpg" alt="rate1" style="width:75%" />
+	<figcaption>the goal (taken from instructions)</figcaption>
+	</figure>
+
+	<p style="white-space: pre-wrap;">
+
+	I have the picture of what we are doing here as to not get it mixed up with Part 5. This one was a bit trickier than the others. 
+
+	Implementation and Debugging:
+	First way I thought about this was that the whole operation was changing where pointers were looking to. I know that there would be no element creation or deletion.
+	Going to state now for disclosure that I did have some help with AI to double check that the pointers were still being set to valid targets.
+
+	Step1: Store the half edges at the edges (h0 and twin t0) and the other 4 half edges of the two triangles (h1,h2,h3,h4), the four vertices (a,b,c,d) and the two faces.
+
+	Step2: Do reassignment by the instructions so use h0 and t0, for the new edge a to d. setNeighbors, sets next, twin, vertex, edge, and face on all the six half edges. Two half edges change faces, h3 to the first and h1 to he second.
+
+	Step3: Reset all the vertices, to a half. edge that they begin at. Reset edge, and both faces. 
+
+	To help with debugging, I set every pointer even the ones that don't change as the assignment suggests as to more "neatly" account for where and what they cold be doing. Then there is use of the check_for(...) to make sure a mesh element has the right other elements pointed to it.
+	
+	</p>
+
+		<figure>
+	<img src="assets/noflips.png" alt="rate1" style="width:75%" />
+	<figcaption>teapot before any edge flips</figcaption>
+	</figure>
+
+		<figure>
+	<img src="assets/repeatflips.png" alt="rate1" style="width:75%" />
+	<figcaption>after several repeated edge flips on some already edge flipped edges</figcaption>
+	</figure>
+
+		<figure>
+	<img src="assets/degencase.png" alt="rate1" style="width:75%" />
+	<figcaption>managed to flip enough edges to cause a degenerate case</figcaption>
+	</figure>
 
 		<h3>Part 5: Edge split</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		
 
 		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		
 
 		<h2>(Optional) Section III: Potential Extra Credit - Art Competition: Model something Creative</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-		<h2>Additional Notes (please remove)</h2>
 		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
 		</ul>
 		</div>
 	</body>
