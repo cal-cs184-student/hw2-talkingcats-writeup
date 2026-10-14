@@ -191,6 +191,8 @@ So for below, in the two images, the meshes are the same, but the right one uses
 	Implementation and Debugging:
 	First way I thought about this was that the whole operation was changing where pointers were looking to. I know that there would be no element creation or deletion.
 	Going to state now for disclosure that I did have some help with AI to double check that the pointers were still being set to valid targets.
+	I also had a lot of scrap paper with arrows pointing everywhere.
+
 
 	Step1: Store the half edges at the edges (h0 and twin t0) and the other 4 half edges of the two triangles (h1,h2,h3,h4), the four vertices (a,b,c,d) and the two faces.
 
@@ -198,8 +200,7 @@ So for below, in the two images, the meshes are the same, but the right one uses
 
 	Step3: Reset all the vertices, to a half. edge that they begin at. Reset edge, and both faces. 
 
-	To help with debugging, I set every pointer even the ones that don't change as the assignment suggests as to more "neatly" account for where and what they cold be doing. Then there is use of the check_for(...) to make sure a mesh element has the right other elements pointed to it.
-	
+	To help with debugging, I set every pointer even the ones that don't change as the assignment suggests as to more "neatly" account for where and what they cold be doing. Then there is use of the check_for(...) to make sure a mesh element has the right other elements pointed to it. I commented it out when not using it.
 	</p>
 
 		<figure>
@@ -218,10 +219,53 @@ So for below, in the two images, the meshes are the same, but the right one uses
 	</figure>
 
 		<h3>Part 5: Edge split</h3>
+
+	<figure>
+	<img src="assets/split.jpg" alt="rate1" style="width:75%" />
+	<figcaption>Edge splitting, what we are trying to do</figcaption>
+	</figure>
 		
+		<p style="white-space: pre-wrap;">
+
+			We put a new point in the middle of two triangles that share an edge. We draw lines from the new point to the two farther corners. The 2 triangles are now 4.
+
+			Start by checking if either triangle counts as a boundary. if so, automatically skip.
+
+			Step 1: Once again like part 4, store all the variavles so (two half edges on the edge, other four half edges of the two triangles, four corner vertices and two faces).
+
+			Step 2: Create all the new elements that I will need to reassign pointers to. So that is 1 new middle vertex. 3 new edges, 6 new half edges and 2 new faces. 
+			These are all the elements you need for the 4 triangles. 
+
+			Step 3: Put the new vertex in the midpoint of the old two edges. m->position. It is the average of vertex b and c.
+
+			Step 4: Re assign all the half edges through setNeighbors. There are now 4 triangles, consisting of 12 half edges. 6 are old and 6 are new. 
+			setNeighbors sets each one to its next half edge, twin, starting vertex, edge, and face. The original edge is now 2 edges (b, m) and (m,c).
+			The two new edges connect from m->a and m->d. Confirming 4 twin pairs. 
+
+			I also added the same exhaustive checkfors that i commented out so i could run the program smoother after it all works out. 
+
+		</p>
+
+	<figure>
+	<img src="assets/justsplits.png" alt="rate1" style="width:75%" />
+	<figcaption>behold, i made just eyes for the cow (Go Ags!) using splits</figcaption>
+	</figure>
+
+			<figure>
+	<img src="assets/splitsandflips.png" alt="rate1" style="width:75%" />
+	<figcaption>This time i used both splits and flips. I tried to make it look like he was winking, though... it may not come across successfully
+
+		I also gave him eyebrows using flips, or a furrowed brow at least. Notice above the eyes. Moo Moo.
+	</figcaption>
+	</figure>
 
 		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
 		
+		<p style="white-space: pre-wrap;">
+
+
+		</p>
+
 
 		<h2>(Optional) Section III: Potential Extra Credit - Art Competition: Model something Creative</h2>
 
