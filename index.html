@@ -262,12 +262,31 @@ So for below, in the two images, the meshes are the same, but the right one uses
 		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
 		
 		<p style="white-space: pre-wrap;">
+			Following the instruction advice to do:
+
+			Step A: Compute the positions of both new and old vertices using the original mesh. We want to perform these computations before subdivision because traversing a coarse mesh is much easier than traversing a subdivided mesh with more elements.
+
+			This is done through the loops Vertex::newPosition and Edge::newPosition.
+			Both these loops run over the mesh and nothing is written to Vertex::position as per instructions.
+			
+			Step B: Subdivide the original mesh via edge splits and flips as described.
+
+			Split loop runs nEdges() times, and each new vertex gets a newPosition from the that edge's Edge::newPosition. 
+			The flip loop only flips edges that are marked isNew == true. One old vertex and new one are connected. 
+			The two halves of a split edge are not considered new, so they are not flipped.
+
+			Step C: Update all vertex positions in the subdivided mesh using the values already computed.
+
+			Final loop puts newPosition into position for every vertex so that if the call is run again, 
+			all the newly updated values will be the input for the next round. 
+
+			Sharp corners and creases shrink inward, and edges become softer, approximating more of a smooth round blob each time. 
+			The pointiest corners and edges round in the most initially.
+			If you split some edges before subdividing you add extra vertices to that feature. The vertices are on the flat faces next to the edge so when the algorithm does a weighted average around the crease, it draws on points that are already near it. The corner is yanked inward less and the shape you are trying to keep looks sharper and "tighter". The more edges you pre split close to the crease area, the sharper, but it adds triangles and makes the overall mesh more expensive. Loop subdivision still makes things smoother, but just over a smaller area. 
+		
 
 
 		</p>
-
-
-		<h2>(Optional) Section III: Potential Extra Credit - Art Competition: Model something Creative</h2>
 
 		<ul>
 		</ul>
