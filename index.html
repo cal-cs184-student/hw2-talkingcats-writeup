@@ -43,7 +43,10 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		As a whole, I think i built the core parts of the geometry processing tools for a graphics options section of a videogame menu. 
+		We started with triangles, which I put together in 3d space to become meshes and thus shapes. The logic and math of a lot of homework 1 was then applied here.
+		The algorithms on how to shade, expand the size of, increase detail within an existing set of lines (in this case, mesh) are carried over. 
+		I don't think I've had to think so much about triangles and how they're facing and what is on the opposite end of them, and what happens if we add lines in them to make new triangles, as much as I have had to for this assignment besides highschool trigonometry. 
 
 		<h2>Section I: Bezier Curves and Surfaces</h2>
 
@@ -283,10 +286,78 @@ So for below, in the two images, the meshes are the same, but the right one uses
 			Sharp corners and creases shrink inward, and edges become softer, approximating more of a smooth round blob each time. 
 			The pointiest corners and edges round in the most initially.
 			If you split some edges before subdividing you add extra vertices to that feature. The vertices are on the flat faces next to the edge so when the algorithm does a weighted average around the crease, it draws on points that are already near it. The corner is yanked inward less and the shape you are trying to keep looks sharper and "tighter". The more edges you pre split close to the crease area, the sharper, but it adds triangles and makes the overall mesh more expensive. Loop subdivision still makes things smoother, but just over a smaller area. 
-		
-
-
+			Behold a cow that becomes smoother over subdivision! 
 		</p>
+
+	<div style="display: flex; flex-direction: column; align-items: center;">
+	<table style="width: 100%; text-align: center; border-collapse: collapse;">
+	<tr>
+				<td style="text-align: center;">
+				  <img src="assets/blockycow.png" width="400px"/>
+				  <figcaption>blocky cow.</figcaption>
+				</td>
+
+				<td style="text-align: center;">
+				  <img src="assets/roundcow.png" width="400px"/>
+				  <figcaption>loop subdivision upscale.</figcaption>
+				</td>
+
+				<td style="text-align: center;">
+				  <img src="assets/mostroundcow.png" width="400px"/>
+				  <figcaption>another loop subdivision upscale.</figcaption>
+				</td>
+	</tr>
+	</table>
+	</div>
+
+	<figure>
+	<img src="assets/upscaledmeshcow.png" alt="rate1" style="width:75%" />
+	<figcaption>Showing how upscaled the mesh on this cow is, compared to part 5</figcaption>
+	</figure>
+
+	<p style="white-space: pre-wrap;">
+
+		The cube becomes lopsided because even though geometrically it is symmetrical, it is not as a mesh. Every square face is split into two triangles. 
+		Therefore each face has a "direction", and the vertex degrees are not even. Corners with more diagonals going into it, have a higher degree weight.
+		Behold this cube slowly become an asymmetrical potato.
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+	<table style="width: 100%; text-align: center; border-collapse: collapse;">
+	<tr>
+				<td style="text-align: center;">
+				  <img src="assets/lump1.png" width="400px"/>
+				  <figcaption>subdivision makes it lumpy</figcaption>
+				</td>
+
+				<td style="text-align: center;">
+				  <img src="assets/lump2.png" width="400px"/>
+				  <figcaption>more subdivision means it is smoother but the first call already made it asymmetrical.</figcaption>
+				</td>
+
+				<td style="text-align: center;">
+				  <img src="assets/lump3.png" width="400px"/>
+				  <figcaption>so now it is smoother but asymmetry is baked in.</figcaption>
+				</td>
+	</tr>
+	</table>
+	</div>
+
+	You can indeed preprocess the cube with edge flips and splits so that there is an even number of faces on each side. Then the cube can be subdivided evenly.
+	It will still eventually form towards roundness but all the extra meshes mean that the edges stay more pronounced. Below are two photos.
+	One shows how having more preprocessed edges and flips reduces the overall rounding since the pointed corners and other "high points" have to compute more meshes and edges of the face in the calculations.
+	The second photo shows multiple subdivision loops on a evenly preprocessed cube showing how the overall rounding is then symmetrical. 
+
+	<figure>
+	<img src="assets/lesslumpy.png" alt="rate1" style="width:75%" />
+	<figcaption>more edges and flips on the "faces" of a cube reduce the rounding. Note though that this cube was not preprocessed perfectly symmetrical</figcaption>
+	</figure>
+	
+	<figure>
+	<img src="assets/fixedcube.png" alt="rate1" style="width:75%" />
+	<figcaption>symmetrically preprocessed cube still eventually rounding its corners after several loop subdivisions</figcaption>
+	</figure>
+
+	</p>
 
 		<ul>
 		</ul>
